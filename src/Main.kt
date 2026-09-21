@@ -1,4 +1,4 @@
-git remote add origin https://github.com/McChanel/Diaspora-Express.git//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
+// git remote add origin https://github.com/McChanel/Diaspora-Express.git//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 fun main() {
     val name = "Kotlin"
