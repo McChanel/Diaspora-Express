@@ -5,10 +5,7 @@ import diaspo_express.data.Utilisateur
 import diaspo_express.data.toStringValue
 
 
-class UtilisateurRepository: BaseRepository<Utilisateur>() {
-    override fun entityName(): String {
-        return "utilisateurs"
-    }
+class UtilisateurRepository: BaseRepository<Utilisateur>("utilisateurs") {
     // return "id: $id, email: ${email}, motDePasse: $motDePasse, telephone: $telephone, statut: $statut";
 
     override fun stringToEntity(line: String): Utilisateur {

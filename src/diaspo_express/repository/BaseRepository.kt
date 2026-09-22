@@ -3,10 +3,12 @@ package diaspo_express.repository
 import java.io.File
 
 
-abstract class BaseRepository<T> {
-    fun saveData(listEntities: MutableList<T>){
+abstract class BaseRepository<T>(var entityName: String) {
+    private val listEntities: MutableList<T> = ArrayList()
+
+    fun saveData(){
         if(listEntities.isNotEmpty()){
-            val fileName = "${entityName()}.txt"
+            val fileName = "${entityName}.txt"
             File(fileName).bufferedWriter().use { writer ->
                 for (entity in listEntities){
                     writer.write(entityToString(entity))
@@ -16,20 +18,25 @@ abstract class BaseRepository<T> {
         }
     }
 
-    fun loadData(): MutableList<T>{
-        val listAdmin: MutableList<T> = mutableListOf()
-        val fileName = "${entityName()}.txt"
+    fun loadData(){
+        listEntities.clear()
+        val fileName = "${entityName}.txt"
 
         if(File(fileName).isFile()){
             File(fileName).forEachLine { line ->
                 val entity = stringToEntity(line)
-                listAdmin.add(entity)
+                listEntities.add(entity)
             }
         }
-        return listAdmin
     }
 
-    abstract fun entityName(): String
+    fun getAll(): MutableList<T> {
+        return listEntities
+    }
+
+    fun add(entity: T) {
+        listEntities.add(entity)
+    }
 
     abstract fun stringToEntity(line: String): T
 

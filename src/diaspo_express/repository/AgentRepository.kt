@@ -1,15 +1,12 @@
 package diaspo_express.repository
 
+import diaspo_express.data.Administrateur
 import diaspo_express.data.Agent
 import diaspo_express.data.StatutCompte
 import diaspo_express.data.toStringValue
 
 
-class AgentRepository: BaseRepository<Agent>() {
-    override fun entityName(): String {
-        return "agents"
-    }
-    // return "id: $id, email: ${email}, motDePasse: $motDePasse, telephone: $telephone, statut: $statut";
+class AgentRepository: BaseRepository<Agent>("agents") {
 
     override fun stringToEntity(line: String): Agent {
         val elements = line.split(", ")
@@ -24,5 +21,40 @@ class AgentRepository: BaseRepository<Agent>() {
     override fun entityToString(entity: Agent): String {
         return "id: ${entity.id}, email: ${entity.email}, motDePasse: ${entity.motDePasse}, telephone: ${entity.telephone}, statut: ${entity.statut.toStringValue()}"
     }
+
+    fun getById(id: String): Agent {
+        return getAll().first { it.id == id }
+    }
 }
 
+fun sauvegarde(){
+    val agentRepository = AgentRepository()
+    agentRepository.add(Agent(
+        "agent001",
+        "ag001@email.com",
+        "pass1234",
+        "69001",
+        StatutCompte.Actif,
+    ))
+    agentRepository.add(Agent(
+        "agent002",
+        "ag002@email.com",
+        "pass1234",
+        "69001",
+        StatutCompte.Actif,
+    ))
+    agentRepository.saveData()
+}
+
+fun chargement(){
+    val agentRepository = AgentRepository()
+    agentRepository.loadData()
+    val listAgent = agentRepository.getAll()
+    for (agent in listAgent) {
+        println(">>> ${agentRepository.entityToString(agent)}")
+    }
+}
+
+fun main() {
+    chargement()
+}

@@ -5,10 +5,7 @@ import diaspo_express.data.StatutCompte
 import diaspo_express.data.toStringValue
 
 
-class AdministrateurRepository: BaseRepository<Administrateur>() {
-    override fun entityName(): String {
-        return "administrateurs"
-    }
+class AdministrateurRepository: BaseRepository<Administrateur>("administrateurs") {
     // return "id: $id, email: ${email}, motDePasse: $motDePasse, telephone: $telephone, statut: $statut";
 
     override fun stringToEntity(line: String): Administrateur {
@@ -22,5 +19,9 @@ class AdministrateurRepository: BaseRepository<Administrateur>() {
     }
     override fun entityToString(entity: Administrateur): String {
         return "id: ${entity.id}, email: ${entity.email}, motDePasse: ${entity.motDePasse}, telephone: ${entity.telephone}, statut: ${entity.statut.toStringValue()}"
+    }
+
+    fun getById(id: String): Administrateur {
+        return getAll().first { it.id == id }
     }
 }
