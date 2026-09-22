@@ -37,7 +37,7 @@ fun StatutCompte.toStringValue(): String{
         StatutCompte.Banni -> "Banni"
     }
 }
-class Compte(
+open class Compte(
     val id: String,
     var email: String,
 
