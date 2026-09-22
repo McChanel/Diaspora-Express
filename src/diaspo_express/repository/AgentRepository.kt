@@ -2,6 +2,7 @@ package diaspo_express.repository
 
 import diaspo_express.data.Agent
 import diaspo_express.data.StatutCompte
+import diaspo_express.data.toStringValue
 
 
 class AgentRepository: BaseRepository<Agent>() {
@@ -18,6 +19,10 @@ class AgentRepository: BaseRepository<Agent>() {
         val telephone = elements[3].split(": ")[1]
         val statut = elements[4].split(": ")[1]
         return Agent(id, email, motDePasse, telephone, StatutCompte.fromString(statut))
+    }
+
+    override fun entityToString(entity: Agent): String {
+        return "id: ${entity.id}, email: ${entity.email}, motDePasse: ${entity.motDePasse}, telephone: ${entity.telephone}, statut: ${entity.statut.toStringValue()}"
     }
 }
 

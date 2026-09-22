@@ -1,7 +1,5 @@
 package diaspo_express.data
 
-import diaspo_express.repository.Entity
-
 sealed class StatutExpedition {
     object EnCours : StatutExpedition()
     object Annulee : StatutExpedition()
@@ -44,11 +42,7 @@ open class Compte(
     var motDePasse: String,
     var telephone: String,
     var statut: StatutCompte,
-): Entity {
-
-    override fun entityToString(): String {
-        return "id: $id, email: ${email}, motDePasse: $motDePasse, telephone: $telephone, statut: ${statut.toStringValue()}"
-    }
+) {
 
     init {
         require(email.isNotBlank()) { "Email obligatoire" }

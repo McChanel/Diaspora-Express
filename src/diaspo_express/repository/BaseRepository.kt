@@ -2,17 +2,14 @@ package diaspo_express.repository
 
 import java.io.File
 
-interface Entity{
-    fun entityToString(): String
-}
 
-abstract class BaseRepository<T: Entity> {
+abstract class BaseRepository<T> {
     fun saveData(listEntities: MutableList<T>){
         if(listEntities.isNotEmpty()){
             val fileName = "${entityName()}.txt"
             File(fileName).bufferedWriter().use { writer ->
                 for (entity in listEntities){
-                    writer.write(entity.entityToString())
+                    writer.write(entityToString(entity))
                     writer.newLine()
                 }
             }
@@ -36,5 +33,6 @@ abstract class BaseRepository<T: Entity> {
 
     abstract fun stringToEntity(line: String): T
 
+    abstract fun entityToString(entity: T): String
 
 }
